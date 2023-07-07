@@ -1,0 +1,245 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CNC_ETIQUETADORA
+{
+
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			double pi = 3.14;
+			//while (true)
+			//{ 
+
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.SetWindowSize(80, 40);
+			Console.Clear();
+			Console.Title = "* USINAGEM EM MAQUINA CNC E ETIQUETAS *\n\n\n";
+
+			Console.WriteLine("____________________________________ \n");
+			Console.WriteLine("|   ESCOLHA O MATERIAL A SER USINADO |\n");
+			Console.WriteLine("|________________|___________________|\n");
+			Console.WriteLine("|                |                   |\n");
+			Console.WriteLine("|  1- NYLON      |    2 - ALUMINIO   |\n");
+			Console.WriteLine("|________________|___________________|\n");
+
+			//-------------------------------------RECEBIMENTO DA ESCOLHA DO MATERIAL---------------------------
+			Console.WriteLine("Insira o Número do Material que deseja ser usinado: \n");
+
+			double E_Materia = Convert.ToDouble(Console.ReadLine());
+			//---------------------------------------------------------------------------------------------------
+
+
+			Console.WriteLine(" ____________________________________ \n");
+			Console.WriteLine("|   ESCOLHA O FORMATO DA PEÇA    	|\n");
+		        Console.WriteLine("|____________________________________|\n");
+			Console.WriteLine("|                |                   |\n");
+			Console.WriteLine("|  1- RETANGULAR |	2 - CILINDRICA  |\n");
+			Console.WriteLine("|________________|___________________|\n");
+
+
+			//------------------------------------RECEBIMENTO DO FORMATO DA PEÇA---------------------------
+
+			Console.WriteLine("Insira o Número do Formato desejado: \n");
+
+			double E_Formato = Convert.ToDouble(Console.ReadLine());
+
+
+			//----------------------- Condiçôes de escolha------------------------------
+
+			//------ Ciclo para o material Nylon
+
+			if (E_Materia == 1 && E_Formato == 1)
+			{
+
+				SubNaylonRet();
+
+			}
+			else if (E_Materia == 1 && E_Formato == 2)
+			{
+
+				SubNaylonCIL();
+			}
+
+			//----Ciclo para o material Aluminio
+
+			if (E_Materia == 2 && E_Formato == 1)
+			{
+				SubAluminioRet();
+			}
+			else if (E_Materia == 2 && E_Formato == 2)
+			{
+				SubAluminioCIL();
+			}
+
+		}
+		//-------------------------------------METODOS---------------------------
+
+		//-----------------------------MÉTODOS PARA ESCOLHA DO NAYLON------------------
+		static double SubNaylonRet()
+
+		{
+
+			double V_N = 0.12;
+
+
+			Console.WriteLine("Insira o valor dejado da Base do Retângulo (mm): \n");
+			double b_NR = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor dejado da Altura do Retângulo(mm): \n");
+			double h_NR = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor dejado Comprimento do Retângulo(mm): \n");
+			double c_NR = Convert.ToDouble(Console.ReadLine());
+
+			//-----Calculo do Volume/Valor a ser pago
+			double volumeRet = (b_NR * h_NR * c_NR);
+			double Ax_PF1 = (volumeRet * V_N);
+			double Ax_PF2 = (Ax_PF1 / 1000);
+			double p_NR = Ax_PF2;
+
+
+
+
+
+		    Console.WriteLine(" ________________________________");
+			Console.WriteLine("| Valor da Base(mm): {0}         |", b_NR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Altura(mm): {0}       |", h_NR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Comprimento(mm): {0}  |", c_NR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Formato Escolhido: RETANGULAR  |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Material Escolhido: NAYLON	    |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| VOLUME: {0} mm³                |", volumeRet);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor total: R$ {0}            |", p_NR.ToString("N2"));
+			Console.WriteLine("|________________________________|");
+
+			return p_NR;
+
+		}
+		//------------------------------NAYLON CILINDRICO
+		static double SubNaylonCIL()
+		{
+			double pi = 3.14;
+			double V_N = 0.00012;
+			
+
+
+			Console.WriteLine("Insira o valor do diâmetro(Ø) do Cilindro(mm): \n");
+			double AX1_raio_nc = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor da Altura do Cilindro(mm): \n");
+			double h_nc = Convert.ToDouble(Console.ReadLine());
+			double AX2_raio_nc = (AX1_raio_nc / 2);
+			double raio_nc = Math.Pow(AX2_raio_nc, 2);
+			double Ab_nc = (pi * raio_nc * h_nc);
+			double p_nc = (Ab_nc * V_N);
+			
+
+			Console.WriteLine(" ________________________________");
+			Console.WriteLine("| Valor do Diametro (mm): {0}    |", AX1_raio_nc);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Altura(mm): {0}	    |", h_nc);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Formato Escolhido : CILINDRICO |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Material Escolhido: NAYLON	    |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| VOLUME: {0} mm³		    |", Ab_nc);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor total: R$ {0}	    |", p_nc.ToString ("N2"));
+			Console.WriteLine("|________________________________|");
+
+			return Ab_nc;
+
+
+		}
+
+		//--------------------------------Método para Escolha do ALUMINIO---------------
+		static double SubAluminioRet()
+
+		{
+
+			Console.WriteLine("Insira o valor dejado da Base do Retângulo (mm): \n");
+			double b_AR = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor dejado da Altura do Retângulo(mm): \n");
+			double h_AR = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor dejado Comprimento do Retângulo(mm): \n");
+			double c_AR = Convert.ToDouble(Console.ReadLine());
+
+			double V_A = 0.08;
+		//---------------------------------CALCULOS------------------
+			double volumeRet = (b_AR * h_AR * c_AR);
+				volumeRet = (b_AR * h_AR * c_AR);
+			double Ax_PF3 = (volumeRet * V_A);
+			double Ax_PF4 = (Ax_PF3 / 1000);
+			 
+			       
+
+
+			Console.WriteLine(" ________________________________");
+			Console.WriteLine("| Valor da Base(mm): {0}	    |", b_AR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Altura(mm): {0}	    |", h_AR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Comprimento(mm): {0}  |", c_AR);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Formato Escolhido: RETANGULAR  |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Material Escolhido: ALUMÍNIO   |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| VOLUME: {0} mm³	            |", volumeRet);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor total: R$ {0}	    |", Ax_PF4.ToString("N2"));
+			Console.WriteLine("|________________________________|");
+
+
+			return Ax_PF4;
+		}
+
+		static double SubAluminioCIL()
+        {
+			double pi = 3.14;
+			double V_A = 0.08;
+
+			Console.WriteLine("Insira o valor do diâmetro(Ø) do Cilindro(mm): \n");
+			double AX1_raio_ac = Convert.ToDouble(Console.ReadLine());
+			Console.WriteLine("Insira o valor da Altura do Cilindro(mm): \n");
+			double h_ac = Convert.ToDouble(Console.ReadLine());
+			double AX2_raio_ac = (AX1_raio_ac / 2);
+			double raio_ac = Math.Pow(AX2_raio_ac, 2);
+			double Ab_ac = (pi * raio_ac * h_ac);
+			double AX_5 = (Ab_ac * V_A);
+			double AX_6 = (AX_5 / 1000);                  //OU  P_F = ((pi * raio_ac * h_ac) * (Ab_ac* V_A)/1000);
+			
+
+			
+
+			Console.WriteLine(" ________________________________");
+			Console.WriteLine("| Valor do Diametro (mm): {0}    |", AX1_raio_ac );
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor da Altura(mm): {0}       |", h_ac);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Formato Escolhido : CILINDRICO |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Material Escolhido: ALUMINIO   |");
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| VOLUME: {0} mm³		    |", Ab_ac);
+			Console.WriteLine("|--------------------------------|");
+			Console.WriteLine("| Valor total: R$ {0}	    |", AX_6.ToString("N2"));
+			Console.WriteLine("|________________________________|");
+
+
+
+			
+			return Ab_ac;
+		}
+
+
+	}
+}
